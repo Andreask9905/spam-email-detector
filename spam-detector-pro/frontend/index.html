@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Spam Detector PRO</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="container">
+        <h1>✉️ Spam Detector PRO</h1>
+        <p>Paste your email content below:</p>
+
+        <textarea id="emailInput" placeholder="Paste email HTML or plain text here..."></textarea>
+
+        <button onclick="analyzeEmail()">Analyze Email</button>
+
+        <div id="resultBox" class="hidden">
+            <h2>📌 Result</h2>
+            <p><strong>Prediction:</strong> <span id="prediction"></span></p>
+            <p><strong>Probability:</strong> <span id="probability"></span></p>
+
+            <h3>🔗 URLs Found</h3>
+            <ul id="urlList"></ul>
+
+            <h3>⚠️ Phishing Warnings</h3>
+            <ul id="warningsList"></ul>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
