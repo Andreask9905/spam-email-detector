@@ -1,41 +1,26 @@
-async function analyzeEmail() {
-    const text = document.getElementById("emailInput").value;
+document.getElementById("checkBtn").addEventListener("click", async () => {
+    const text = document.getElementById("emailText").value.trim();
 
-    if (!text.trim()) {
-        alert("Please paste an email first.");
+    if (text === "") {
+        alert("Παρακαλώ γράψε ένα μήνυμα για έλεγχο.");
         return;
     }
 
-    const response = await fetch("http://localhost:8000/analyze", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ text })
-    });
+    try {
+        const response = await fetch("http://127.0.0.1:8000/predict", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ text })
+        });
 
-    const data = await response.json();
+        const data = await response.json();
 
-    // Show result box
-    document.getElementById("resultBox").classList.remove("hidden");
-
-    // Prediction
-    document.getElementById("prediction").textContent = data.prediction;
-    document.getElementById("probability").textContent = data.probability.toFixed(4);
-
-    // URLs
-    const urlList = document.getElementById("urlList");
-    urlList.innerHTML = "";
-    data.urls.forEach(url => {
-        const li = document.createElement("li");
-        li.textContent = url;
-        urlList.appendChild(li);
-    });
-
-    // Phishing warnings
-    const warnList = document.getElementById("warningsList");
-    warnList.innerHTML = "";
-    data.phishing.forEach(w => {
-        const li = document.createElement("li");
-        li.textContent = `${w.url} → ${w.warnings.join(", ")}`;
-        warnList.appendChild(li);
-    });
-}
+        document.getElementById("result").innerHTML = `
+            <strong>Αποτέλεσμα:</strong> ${data.label.toUpperCase()} <br>
+            <strong>Πιθανότητα SPAM:</strong> ${(data.probability * 100).toFixed(2)}%
+        `;
+    } catch (error) {
+        console.error("Error:", error);
+        alert("Σφάλμα σύνδεσης με το backend.");
+    }
+});
