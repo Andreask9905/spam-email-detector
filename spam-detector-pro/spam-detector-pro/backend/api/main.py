@@ -2,9 +2,20 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 from classifier import load_model, predict_spam
 from utils import clean_text
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
 
+# Enable CORS so the frontend can call the API
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],   
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+# Load ML model
 model, vectorizer = load_model()
 
 class EmailRequest(BaseModel):
@@ -14,7 +25,6 @@ class EmailRequest(BaseModel):
 def predict_email(req: EmailRequest):
     cleaned = clean_text(req.text)
     label, prob = predict_spam(model, vectorizer, cleaned)
-
     return {
         "label": label,
         "probability": prob
