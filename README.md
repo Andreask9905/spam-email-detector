@@ -13,15 +13,18 @@
 ---
 
 ## 📂 Δομή φακέλων
-spam-email-detector/
-├─ data/
-│  ├─ sample.csv
-├─ src/
-│  ├─ train.py
-│  ├─ predict.py
-├─ main.py
-├─ requirements.txt
-└─ .gitignore
+spam-detector-pro/
+└── backend/
+    ├── __init__.py
+    ├── api/
+    │   ├── __init__.py
+    │   └── main.py
+    └── ml/
+        ├── __init__.py
+        ├── classifier.py
+        ├── preprocess.py
+        └── train.py
+
 ---
 
 ## ⚙️ Εγκατάσταση
