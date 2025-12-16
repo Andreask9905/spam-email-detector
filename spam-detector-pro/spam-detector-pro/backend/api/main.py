@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
-from classifier import load_model, predict_spam
-from utils import clean_text
+from backend.ml.classifier import load_model, predict_spam
+from backend.ml.utils import clean_text
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
